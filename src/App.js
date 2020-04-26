@@ -1,11 +1,10 @@
 import React from 'react';
+import Rogue from './components/Rogue';
 
-function App() {
-  return (
+const App = () => (
     <div className="App">
-      Hello
+      <Rogue width={40} height={40} tileSize={16}/>
     </div>
-  );
-}
+)
 
 export default App;
