@@ -1,19 +1,33 @@
 import React, {useRef, useEffect, useState} from 'react';
 import InputManager from './InputManager';
-import Player from './Player';
+import World from './World';
+import Spawner from './Spawner';
 
 const Rogue = ({ width, height, tileSize }) => {
   const canvasRef = useRef();
-  const [player, setPlayer] = useState(new Player(1, 1, 16))
+  //const [player, setPlayer] = useState(new Player(1, 1, 16))
+  const [world, setWorld] = useState(new World(width, height, tileSize))
   let inputManager = new InputManager();
 
   const handleInput = (action, data) => {
     console.log(`handle input: ${action}:${JSON.stringify(data)}`);
-    let newPlayer = new Player();
-    Object.assign(newPlayer, player);
-    newPlayer.move(data.x, data.y);
-    setPlayer(newPlayer);
+    let newWorld = new World();
+    Object.assign(newWorld, world);
+    newWorld.movePlayer(data.x, data.y);
+    setWorld(newWorld);
   }
+
+  useEffect(() => {
+    console.log("Create Map!");
+    let newWorld = new World();
+    Object.assign(newWorld, world);
+    newWorld.createCellularMap();
+    newWorld.moveToSpace(world.player);
+    setWorld(newWorld);
+    let spawner = new Spawner(world);
+    spawner.spawnLoot(10);
+    // eslint-disable-next-line
+  }, [])
 
   useEffect(() => {
     console.log('Bind input');
@@ -30,14 +44,14 @@ const Rogue = ({ width, height, tileSize }) => {
     console.log('Draw');
     const ctx = canvasRef.current.getContext('2d');
     ctx.clearRect(0, 0, width * tileSize, height * tileSize);
-    player.draw(ctx);
+    world.draw(ctx);
   });
   return (
     <canvas
       ref={canvasRef}
       width={width * tileSize}
       height={height * tileSize}
-      style={{ border: '1px solid black' }}
+      style={{ border: '1px solid black', background: 'DimGrey'}}
     />
   );
 };
