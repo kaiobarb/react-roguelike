@@ -7,12 +7,12 @@ class World {
     this.height = height;
     this.tileSize = tileSize;
     this.entities = [new Player(1, 1, tileSize)]
+    this.history = ["You Enter the Dungeon", '---']
     // making 2d array
     this.worldmap = new Array(this.width);
     for (let x = 0; x < this.width; x++) {
       this.worldmap[x] = new Array(this.height);
     }
-    //this.createCellularMap();
   }
 
   get player() {
@@ -50,10 +50,18 @@ class World {
     this.entities.push(entity);
   }
 
+  remove(entity){
+    this.entities = this.entities.filter(e => e !== entity);
+  }
+
+  addToHistory(item){
+    this.history.push(item);
+  }
+
   moveToSpace(entity) {
     for (let x = entity.x; x < this.width; x++) {
       for (let y = entity.y; y < this.height; y++) {
-        if (this.worldmap[x][y] === 0) {
+        if (this.worldmap[x][y] === 0 && !this.getEntityAtLocation(x, y) ) {
           entity.x = x;
           entity.y = y;
           return;

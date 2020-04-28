@@ -1,29 +1,35 @@
 import Entity from './Entity';
 class Player extends Entity {
-    
-    attributes = {
-        name: 'Player',
-        ascii: '@',
-        health: 10
-    }
+  inventory = [];
 
-    move(dx, dy){
-        this.x += dx;
-        this.y += dy;
-    }
+  attributes = {
+    name: 'Player',
+    ascii: '@',
+    health: 10
+  }
 
-    draw(context) {
-        context.fillStyle = '#f40';
-        context.textBaseline = 'hanging';
-        context.font = '16px Helvetica';
-        context.fillText('@', this.x * this.size, this.y * this.size);
-    }
+  move(dx, dy) {
+    if (this.attributes.health <= 0) return;
+    this.x += dx;
+    this.y += dy;
+  }
 
-    copyPlayer(){
-        let newPlayer = new Player();
-        Object.assign(newPlayer, this);
-        return newPlayer;
-    }
+  add(item) {
+    this.inventory.push(item);
+  }
+
+  draw(context) {
+    context.fillStyle = '#f40';
+    context.textBaseline = 'hanging';
+    context.font = '16px Helvetica';
+    context.fillText('@', this.x * this.size, this.y * this.size);
+  }
+
+  copyPlayer() {
+    let newPlayer = new Player();
+    Object.assign(newPlayer, this);
+    return newPlayer;
+  }
 }
 
 export default Player;

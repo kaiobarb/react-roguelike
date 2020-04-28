@@ -26,6 +26,8 @@ const Rogue = ({ width, height, tileSize }) => {
     setWorld(newWorld);
     let spawner = new Spawner(world);
     spawner.spawnLoot(10);
+    spawner.spawnMonsters(6);
+    spawner.spawnStairs();
     // eslint-disable-next-line
   }, [])
 
@@ -47,12 +49,19 @@ const Rogue = ({ width, height, tileSize }) => {
     world.draw(ctx);
   });
   return (
+    <>
     <canvas
       ref={canvasRef}
       width={width * tileSize}
       height={height * tileSize}
       style={{ border: '1px solid black', background: 'DimGrey'}}
     />
+    <ul>
+      {world.history.map((item, index) => 
+        (<li key={index}>{item}</li>)
+      )}
+    </ul>
+    </>
   );
 };
 
