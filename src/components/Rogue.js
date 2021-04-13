@@ -1,4 +1,4 @@
-import React, {useRef, useEffect, useState} from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import InputManager from './InputManager';
 import World from './World';
 import Spawner from './Spawner';
@@ -36,7 +36,7 @@ const Rogue = ({ width, height, tileSize }) => {
     inputManager.bindKeys();
     inputManager.subscribe(handleInput);
     // useEffect returns when this component exits. Time to dismount
-    return() => {
+    return () => {
       inputManager.unbindKeys();
       inputManager.unsubscribe();
     }
@@ -50,17 +50,28 @@ const Rogue = ({ width, height, tileSize }) => {
   });
   return (
     <>
-    <canvas
-      ref={canvasRef}
-      width={width * tileSize}
-      height={height * tileSize}
-      style={{ border: '1px solid black', background: 'DimGrey'}}
-    />
-    <ul>
-      {world.history.map((item, index) => 
-        (<li key={index}>{item}</li>)
-      )}
-    </ul>
+      <canvas
+        ref={canvasRef}
+        width={width * tileSize}
+        height={height * tileSize}
+        style={{ border: '1px solid black', background: 'DimGrey', imageRendering: 'pixelated' }}
+      />
+      <article class="panel is-dark" style={{overflow:'auto', height:width * tileSize+'px'}}>
+        <p class="panel-heading">
+          Log
+        </p>
+        {world.history.map((item, index) =>
+          (<div className='panel-block' key={index}>{item}</div>)
+        )}
+        {/* <a class="panel-block">
+          bulma
+        </a> */}
+      </article>
+        {/* <ul>
+          {world.history.map((item, index) =>
+            (<li key={index}>{item}</li>)
+          )}
+        </ul> */}
     </>
   );
 };

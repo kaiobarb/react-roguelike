@@ -27,7 +27,7 @@ class World {
     let playerCopy = this.player.copyPlayer();
     playerCopy.move(dx, dy);
     let entity = this.getEntityAtLocation(playerCopy.x, playerCopy.y);
-    if (entity){
+    if (entity) {
       console.log(entity);
       entity.action('bump', this);
       return;
@@ -50,18 +50,18 @@ class World {
     this.entities.push(entity);
   }
 
-  remove(entity){
+  remove(entity) {
     this.entities = this.entities.filter(e => e !== entity);
   }
 
-  addToHistory(item){
+  addToHistory(item) {
     this.history.push(item);
   }
 
   moveToSpace(entity) {
     for (let x = entity.x; x < this.width; x++) {
       for (let y = entity.y; y < this.height; y++) {
-        if (this.worldmap[x][y] === 0 && !this.getEntityAtLocation(x, y) ) {
+        if (this.worldmap[x][y] === 0 && !this.getEntityAtLocation(x, y)) {
           entity.x = x;
           entity.y = y;
           return;
@@ -74,7 +74,7 @@ class World {
 
   createCellularMap() {
     var map = new Map.Cellular(this.width, this.height, { connected: true });
-    map.randomize(0.5);
+    map.randomize(0.47);
     var userCallback = (x, y, value) => {
       if (x === 0 || y === 0 || x === this.width - 1 || y === this.height - 1) {
         this.worldmap[x][y] = 1;
@@ -82,8 +82,12 @@ class World {
       }
       this.worldmap[x][y] = (value === 0) ? 1 : 0;
     };
-    map.create(userCallback);
-    map.connect(userCallback, 1);
+    for (var i = 0; i < 10; i++) {
+      map.create(userCallback);
+      map.connect(userCallback, 1);
+    }
+    
+
   }
 
   draw(context) {
