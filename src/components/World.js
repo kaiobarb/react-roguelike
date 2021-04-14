@@ -1,5 +1,6 @@
 import { Map } from 'rot-js';
 import Player from './Player';
+import tileset from '../textures/topdown.png'
 
 class World {
   constructor(width, height, tileSize) {
@@ -7,6 +8,8 @@ class World {
     this.height = height;
     this.tileSize = tileSize;
     this.entities = [new Player(1, 1, tileSize)]
+    this.tiles = new Image();
+    this.tiles.src = tileset;
     this.history = ["You Enter the Dungeon", '---']
     // making 2d array
     this.worldmap = new Array(this.width);
@@ -86,7 +89,7 @@ class World {
       map.create(userCallback);
       map.connect(userCallback, 1);
     }
-    
+
 
   }
 
@@ -94,6 +97,7 @@ class World {
     for (let x = 0; x < this.width; x++) {
       for (let y = 0; y < this.height; y++) {
         if (this.worldmap[x][y] === 1) this.drawWall(context, x, y);
+        else this.drawFloor(context, x, y)
       }
     }
     this.entities.forEach(entity => {
@@ -102,13 +106,23 @@ class World {
   }
 
   drawWall(context, x, y) {
-    context.fillStyle = '#000';
-    context.fillRect(
-      x * this.tileSize,
-      y * this.tileSize,
-      this.tileSize,
-      this.tileSize,
-    );
+    // context.fillStyle = '#000';
+    // context.fillRect(
+    //   x * this.tileSize,
+    //   y * this.tileSize,
+    //   this.tileSize,
+    //   this.tileSize,
+    // );
+    if (this.worldmap[x][y + 1] === 0) {
+      context.drawImage(this.tiles, 8, 0, 8, 8, x * this.tileSize, y * this.tileSize, this.tileSize, this.tileSize);
+    }
+    else {
+      context.drawImage(this.tiles, 0, 0, 8, 8, x * this.tileSize, y * this.tileSize, this.tileSize, this.tileSize);
+    }
+  }
+
+  drawFloor(context, x, y) {
+    context.drawImage(this.tiles, 0, 24, 8, 8, x * this.tileSize, y * this.tileSize, this.tileSize, this.tileSize);
   }
 }
 

@@ -8,9 +8,9 @@ const App = () => (
     <div className=" container hero-head">
       <div className="title has-text-warning-dark">Roguelike</div>
     </div>
-    <div className="hero-body">
+    {/* <div className="container hero-body"> */}
       <Rogue width={40} height={40} tileSize={16} />
-    </div>
+    {/* </div> */}
     <div className="hero-foot"></div>
   </div>
 )

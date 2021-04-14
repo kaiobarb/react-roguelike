@@ -7,8 +7,7 @@ class Player extends Entity {
     name: 'Player',
     ascii: '@',
     health: 10,
-    offset: {x: -8, y: -8},
-    texture: '../textures/basic_idle_01.png'
+    offset: { x: -8, y: -8 },
   }
 
   move(dx, dy) {
@@ -26,12 +25,9 @@ class Player extends Entity {
     // context.textBaseline = 'hanging';
     // context.font = '16px Helvetica';
     // context.fillText('@', this.x * this.size, this.y * this.size);
-    if (this.attributes.texture) {
-      var image = new Image();
-      image.src = sprite;
-      console.log(sprite)
-      context.drawImage(image, this.x * this.size + this.attributes.offset.x, this.y * this.size + this.attributes.offset.y, 32, 32)
-    }
+    // var image = new Image();
+    this.sprite.src = sprite;
+    context.drawImage(this.sprite, this.x * this.size + this.attributes.offset.x, this.y * this.size + this.attributes.offset.y, 32, 32)
   }
 
   copyPlayer() {

@@ -1,11 +1,14 @@
 import Loot from './Loot';
 import Monster from './Monster';
 import Stairs from './Stairs';
+import spritePotion from '../textures/potion_red.png';
+import spriteSword from '../textures/sword.png';
+import spriteGold from '../textures/chest_open_full.png';
 
 const lootTable = [
-    { name: 'Long Sword', color: 'darkgrey', ascii: '/', offset: { x: 6, y: 3 } },
-    { name: 'Health Potion', color: 'red', ascii: '!', offset: { x: 6, y: 3 } },
-    { name: 'Gold Coin', color: 'yellow', ascii: '$', offset: { x: 4, y: 3 } },
+    { name: 'Long Sword', color: 'darkgrey', ascii: '/', offset: { x: 6, y: 3 }, texture: spriteSword },
+    { name: 'Health Potion', color: 'red', ascii: '!', offset: { x: 0, y: 0 }, texture: spritePotion },
+    { name: 'Gold Coin', color: 'yellow', ascii: '$', offset: { x: 4, y: 3 }, texture: spriteGold },
     { name: 'Light Armor', color: 'lightgrey', ascii: 'm', offset: { x: 4, y: 3 } }
 ];
 
